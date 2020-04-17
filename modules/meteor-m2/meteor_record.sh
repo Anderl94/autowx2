@@ -10,4 +10,4 @@ durationMin=$(bc <<< "$duration/60 +2")
 # recording
 #
 echo "$startT-$stopT, duration: $durationMin min"
-mlrpt -s $startT-$stopT -t $durationMin
+mlrpt -s $startT-$stopT -t $durationMin -c M2-1-72k.cfg

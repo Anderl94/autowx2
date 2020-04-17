@@ -5,8 +5,10 @@
 
 ### for installing the dongle
 ### for details, see: http://www.instructables.com/id/rtl-sdr-on-Ubuntu/
-#sudo echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838", GROUP="adm", MODE="0666", SYMLINK+="rtl_sdr"' >> /etc/udev/rules.d/20.rtlsdr.rules
-#sudo echo "blacklist dvb_usb_rtl28xxu" >>  /etc/modprobe.d/rtl-sdr-blacklist.conf
+#printf "%s\n" "$szPassword" | echo 'SUBSYSTEM=="usb", ATTRS{idVendor}=="0bda", ATTRS{idProduct}=="2838", GROUP="adm", MODE="0666", SYMLINK+="rtl_sdr"' >> /etc/udev/rules.d/20.rtlsdr.rules
+#printf "%s\n" "$szPassword" | echo "blacklist dvb_usb_rtl28xxu" >>  /etc/modprobe.d/rtl-sdr-blacklist.conf
+
+read -p "Password: " -s szPassword
 
 MACHINE_TYPE=$(uname -m)
 echo $MACHINE_TYPE
@@ -29,8 +31,8 @@ echo
 echo "******** Installing required packages"
 echo
 echo
-sudo apt-get update
-sudo apt-get install -y rtl-sdr git libpulse-dev qt4-qmake fftw3 libc6 libfontconfig1 libx11-6 libxext6 libxft2 libusb-1.0-0-dev \
+printf "%s\n" "$szPassword" | apt-get update
+printf "%s\n" "$szPassword" | apt-get install -y rtl-sdr git libpulse-dev qt4-qmake fftw3 libc6 libfontconfig1 libx11-6 libxext6 libxft2 libusb-1.0-0-dev \
 libavahi-client-dev libavahi-common-dev libdbus-1-dev libfftw3-single3 libpulse-mainloop-glib0 librtlsdr0 librtlsdr-dev \
 libfftw3-dev libfftw3-double3 lame sox libsox-fmt-mp3 libtool automake python-pil python-imaging imagemagick python-dev \
 bc imagemagick moreutils libfreetype6-dev pkg-config curl
@@ -42,12 +44,12 @@ if [ ${MACHINE_TYPE} == 'armv6l' ] || [ ${MACHINE_TYPE} == 'armv7l' ] || [ ${MAC
 	echo "******** Installing Rpi required packages"
 	echo
 	echo
-	sudo apt-get install -y libtool qt4-default automake autotools-dev m4
+	printf "%s\n" "$szPassword" | apt-get install -y libtool qt4-default automake autotools-dev m4
 	curl https://bootstrap.pypa.io/get-pip.py > get-pip.py
-	sudo python get-pip.py
+	printf "%s\n" "$szPassword" | python get-pip.py
 else
-	sudo apt-get install -y libfftw3-long3
-	sudo apt-get install -y libfftw3-quad3
+	printf "%s\n" "$szPassword" | apt-get install -y libfftw3-long3
+	printf "%s\n" "$szPassword" | apt-get install -y libfftw3-quad3
 fi
 
 
@@ -77,15 +79,15 @@ echo
 if [ ${MACHINE_TYPE} == 'x86_64' ]; then
     echo "64-bit system"
     wget https://wxtoimgrestored.xyz/downloads/wxtoimg-linux64-2.10.11-1.tar.gz
-    gunzip < wxtoimg-linux64-2.10.11-1.tar.gz | sudo sh -c "(cd /; tar -xvf -)"
+    gunzip < wxtoimg-linux64-2.10.11-1.tar.gz | printf "%s\n" "$szPassword" | sh -c "(cd /; tar -xvf -)"
 elif [ ${MACHINE_TYPE} == 'armv6l' ] || [ ${MACHINE_TYPE} == 'armv7l' ] || [ ${MACHINE_TYPE} == 'aarch64' ]; then
     wget https://wxtoimgrestored.xyz/beta/wxtoimg-armhf-2.11.2-beta.deb
-    sudo dpkg -i wxtoimg-armhf-2.11.2-beta.deb
+    printf "%s\n" "$szPassword" | dpkg -i wxtoimg-armhf-2.11.2-beta.deb
 else
     echo "32-bit system"
     wget https://wxtoimgrestored.xyz/downloads/wxtoimg_2.10.11-1_i386.deb
-    sudo dpkg -i wxtoimg_2.10.11-1_i386.deb	# may generate some dependencies errors; if not, stop here
-    # sudo apt-get -f install
+    printf "%s\n" "$szPassword" | dpkg -i wxtoimg_2.10.11-1_i386.deb	# may generate some dependencies errors; if not, stop here
+    # printf "%s\n" "$szPassword" | apt-get -f install
 fi
 
 wxtoimg -h
@@ -105,7 +107,7 @@ mkdir build
 cd build
 qmake ../multimon-ng.pro
 make
-sudo make install
+printf "%s\n" "$szPassword" | make install
 
 
 multimon-ng -h
@@ -125,7 +127,7 @@ cd kalibrate-rtl
 ./bootstrap
 ./configure
 make
-sudo make install
+printf "%s\n" "$szPassword" | make install
 
 kal -h
 

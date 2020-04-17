@@ -1,6 +1,6 @@
 configparser
 pypredict
 numpy==1.16.6
-matplotlib==2.2.4
+matplotlib==2.2.5
 Flask
 Flask-SocketIO

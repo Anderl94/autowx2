@@ -32,12 +32,11 @@ echo "******** Installing required packages"
 echo
 echo
 printf "%s\n" "$szPassword" | apt-get update
-printf "%s\n" "$szPassword" | apt-get install -y rtl-sdr git libpulse-dev qt4-qmake fftw3 libc6 libfontconfig1 libx11-6 libxext6 libxft2 libusb-1.0-0-dev \
-libavahi-client-dev libavahi-common-dev libdbus-1-dev libfftw3-single3 libpulse-mainloop-glib0 librtlsdr0 librtlsdr-dev \
-libfftw3-dev libfftw3-double3 lame sox libsox-fmt-mp3 libtool automake python-pil imagemagick python-dev \
-bc imagemagick moreutils libfreetype6-dev pkg-config curl apt-utils libpulse-dev
+printf "%s\n" "$szPassword" | apt-get install -y git libpulse-dev qt4-qmake fftw3 libc6 libfontconfig1 libx11-6 libxext6 libxft2 libusb-1.0-0-dev \
+libavahi-client-dev libavahi-common-dev libdbus-1-dev libfftw3-single3 libpulse-mainloop-glib0 libusb-1.0-0-dev libdistro-info-perl \
+libfftw3-dev libfftw3-double3 lame sox libsox-fmt-mp3 libtool automake python-pil python-dev ibdistro-info-perl \
+bc imagemagick moreutils libfreetype6-dev pkg-config libpulse-dev debhelper devscripts cmake --no-install-recommends
 
-sudo ldconfig
 
 
 if [ ${MACHINE_TYPE} == 'armv6l' ] || [ ${MACHINE_TYPE} == 'armv7l' ] || [ ${MACHINE_TYPE} == 'aarch64' ]; then
@@ -105,6 +104,28 @@ wxtoimg -h
 
 echo
 echo
+echo "******** Installing rtl-sdr"
+echo
+echo
+
+cd $baseDir/bin/sources/
+
+git clone -b development https://github.com/hayguen/librtlsdr.git librtlsdr-hayguen
+cd librtlsdr-hayguen
+cp debian/debianize_armhf debian/debianize_aarch64
+sed -i 's/armhf/aarch64/g' debian/debianize_aarch64
+sed -i 's/LIBUSB_API_VERSION >= 0x01000105/LIBUSB_API_VERSION >= 0x11000105/g' src/librtlsdr.c
+dch --distribution unstable --newversion 1.0 "RTL SDR"
+DEB_BUILD_OPTIONS='parallel=20' printf "%s\n" "$szPassword" | sudo debuild -uc -us -j16
+printf "%s\n" "$szPassword" | sudo dpkg -i ../librtlsdr-dev*.deb ../librtlsdr*.deb ../rtl-sdr*.deb
+printf "%s\n" "$szPassword" | sudo cp rtl-sdr.rules /etc/udev/udev.d
+printf "%s\n" "$szPassword" | sudo udevadm control --reload-rules && printf "%s\n" "$szPassword" | sudo udevadm trigger
+printf "%s\n" "$szPassword" | sudo rm ../llibrtlsdr*.* ../lrtl-sdr*.*
+
+
+
+echo
+echo
 echo "******** Installing multimon-ng"
 echo
 echo
@@ -116,7 +137,7 @@ cd multimon-ng
 mkdir build
 cd build
 qmake ../multimon-ng.pro
-make
+make -j4
 printf "%s\n" "$szPassword" | make install
 
 

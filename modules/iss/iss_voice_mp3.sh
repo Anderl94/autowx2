@@ -49,7 +49,7 @@ echo "freq=$freq"
 
 ### RECORDING TO MP3
 echo "Recording to mp3"
-timeout $duration rtl_fm -f $freq -M fm -g 49.6 -l 0 | lame -r -s 32k -m m - "$recdir/$fileNameCore.mp3"
+timeout $duration rtl_fm -d $dongleSerial -f $freq -M fm -g 49.6 -l 0 | lame -r -s 32k -m m - "$recdir/$fileNameCore.mp3"
 sox "$recdir/$fileNameCore.mp3" -n spectrogram  -o "$recdir/$fileNameCore-spectrogram.png"
 sox "$recdir/$fileNameCore.mp3" "$recdir/$fileNameCore-silence.mp3" silence -l 1 0.3 10% -1 2.0 10%
 $baseDir/bin/multidemodulator.sh "$recdir/$fileNameCore.mp3" > "$recdir/$fileNameCore-demodulated.log"

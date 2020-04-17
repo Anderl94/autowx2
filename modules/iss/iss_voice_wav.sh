@@ -50,7 +50,7 @@ echo "freq=$freq"
 
 ### RECORDING TO WAV, for further processing, eg, for SSTV
 echo "Recording to wav"
-timeout $duration rtl_fm -f $freq -s $sample -g $dongleGain -F 9 -A fast -E offset -p $dongleShift $recdir/$fileNameCore.raw | tee -a $logFile
+timeout $duration rtl_fm -d $dongleSerial -f $freq -s $sample -g $dongleGain -F 9 -A fast -E offset -p $dongleShift $recdir/$fileNameCore.raw | tee -a $logFile
 sox -t raw -r $sample -es -b 16 -c 1 -V1 $recdir/$fileNameCore.raw $recdir/$fileNameCore.wav rate $wavrate | tee -a $logFile
 touch -r $recdir/$fileNameCore.raw $recdir/$fileNameCore.wav
 rm $recdir/$fileNameCore.raw

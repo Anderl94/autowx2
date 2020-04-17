@@ -57,7 +57,7 @@ echo "Recording to dat/iq format"
 #sample="2500000"
 sample="44000"
 
-timeout $duration rtl_fm -f $freq -g $dongleGain -s $sample -F 9 -A fast -E offset -p $dongleShift $recdir/$fileNameCore.iq | tee -a $logFile
+timeout $duration rtl_fm -d $dongleSerial -f $freq -g $dongleGain -s $sample -F 9 -A fast -E offset -p $dongleShift $recdir/$fileNameCore.iq | tee -a $logFile
 sox -t raw -r $sample -es -b 16 -c 1 -V1 $recdir/$fileNameCore.iq $recdir/$fileNameCore.wav rate $wavrate | tee -a $logFile
 touch -r $recdir/$fileNameCore.iq $recdir/$fileNameCore.wav
 sox "$recdir/$fileNameCore.wav" -n spectrogram  -o "$recdir/$fileNameCore-spectrogram.png"

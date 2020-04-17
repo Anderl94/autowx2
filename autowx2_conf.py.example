@@ -85,6 +85,11 @@ stationAlt = '179'
 stationName = 'San Escobar'
 
 #
+# dongle Serialnumber from rtl_test
+#
+dongleSerial = '13'
+
+#
 # dongle gain
 #
 dongleGain = '49.6'

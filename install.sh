@@ -36,7 +36,7 @@ libfftw3-dev libfftw3-double3 lame sox libsox-fmt-mp3 libtool automake python-pi
 bc imagemagick moreutils libfreetype6-dev
 
 
-if [ ${MACHINE_TYPE} == 'armv6l' ] || [ ${MACHINE_TYPE} == 'armv7l' ]; then
+if [ ${MACHINE_TYPE} == 'armv6l' ] || [ ${MACHINE_TYPE} == 'armv7l' || [ ${MACHINE_TYPE} == 'aarch64' ]; then
 	echo
 	echo
 	echo "******** Installing Rpi required packages"
@@ -52,7 +52,7 @@ fi
 
 
 PIP_OPTIONS=""
-if [ ${MACHINE_TYPE} == 'armv6l' ] || [ ${MACHINE_TYPE} == 'armv7l' ]; then
+if [ ${MACHINE_TYPE} == 'armv6l' ] || [ ${MACHINE_TYPE} == 'armv7l' || [ ${MACHINE_TYPE} == 'aarch64' ]; then
   PIP_OPTIONS="--no-cache-dir"
 fi
 
@@ -78,7 +78,7 @@ if [ ${MACHINE_TYPE} == 'x86_64' ]; then
     echo "64-bit system"
     wget https://wxtoimgrestored.xyz/downloads/wxtoimg-linux64-2.10.11-1.tar.gz
     gunzip < wxtoimg-linux64-2.10.11-1.tar.gz | sudo sh -c "(cd /; tar -xvf -)"
-elif [ ${MACHINE_TYPE} == 'armv6l' ] || [ ${MACHINE_TYPE} == 'armv7l' ]; then
+elif [ ${MACHINE_TYPE} == 'armv6l' ] || [ ${MACHINE_TYPE} == 'armv7l' || [ ${MACHINE_TYPE} == 'aarch64' ]; then
     wget https://wxtoimgrestored.xyz/beta/wxtoimg-armhf-2.11.2-beta.deb
     sudo dpkg -i wxtoimg-armhf-2.11.2-beta.deb
 else

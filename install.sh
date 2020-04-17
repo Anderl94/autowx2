@@ -37,6 +37,8 @@ libavahi-client-dev libavahi-common-dev libdbus-1-dev libfftw3-single3 libpulse-
 libfftw3-dev libfftw3-double3 lame sox libsox-fmt-mp3 libtool automake python-pil imagemagick python-dev \
 bc imagemagick moreutils libfreetype6-dev pkg-config curl apt-utils libpulse-dev
 
+sudo ldconfig
+
 
 if [ ${MACHINE_TYPE} == 'armv6l' ] || [ ${MACHINE_TYPE} == 'armv7l' ] || [ ${MACHINE_TYPE} == 'aarch64' ]; then
 	echo

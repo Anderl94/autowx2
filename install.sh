@@ -93,14 +93,14 @@ wxtoimg -h
 
 echo
 echo
-echo "******** Installing multimon-ng-stqc"
+echo "******** Installing multimon-ng"
 echo
 echo
 
 cd $baseDir/bin/sources/
 
-git clone https://github.com/sq5bpf/multimon-ng-stqc.git
-cd multimon-ng-stqc
+git clone https://github.com/EliasOenal/multimon-ng.git
+cd multimon-ng
 mkdir build
 cd build
 qmake ../multimon-ng.pro

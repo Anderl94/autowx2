@@ -34,7 +34,7 @@ echo
 printf "%s\n" "$szPassword" | apt-get update
 printf "%s\n" "$szPassword" | apt-get install -y git libpulse-dev qt4-qmake fftw3 libc6 libfontconfig1 libx11-6 libxext6 libxft2 libusb-1.0-0-dev \
 libavahi-client-dev libavahi-common-dev libdbus-1-dev libfftw3-single3 libpulse-mainloop-glib0 libusb-1.0-0-dev libdistro-info-perl \
-libfftw3-dev libfftw3-double3 lame sox libsox-fmt-mp3 libtool automake python-pil python-dev ibdistro-info-perl \
+libfftw3-dev libfftw3-double3 lame sox libsox-fmt-mp3 libtool automake python-pil python-dev libdistro-info-perl \
 bc imagemagick moreutils libfreetype6-dev pkg-config libpulse-dev debhelper devscripts cmake --no-install-recommends
 
 
